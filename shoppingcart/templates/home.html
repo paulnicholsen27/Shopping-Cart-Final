@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block site_wrapper %}
+<h1>Welcome to {{store_name}}!</h1>
+    <br><hr><br><br>
+    <form method="post" action="." class="login"> {% csrf_token %}
+        {{ form.as_p }}
+        <p id='error'>{{ error_message }}</p>
+        User Name: <input type="text" name="username">
+        Password: <input type="password" name="password">
+        <button type="submit">Log In</button>
+    </form>
+        <p><a href="/createuser/">New User</a></p>        
+        <p><a href="/products/">Continue without logging in</a></p>
+
+{% endblock %}

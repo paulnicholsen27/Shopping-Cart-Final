@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% load catalog_filters %}
+{% block site_wrapper %}
+
+<div id="main">
+    <div id="banner">
+            {{store_name}}
+            {% if user.is_authenticated %}
+            <div id='welcome'>
+                Welcome {{ user.first_name }}!
+            
+                <div>
+                    <a href="/changeuser/">Not {{user.first_name}}? Click here</a>
+                </div>
+            </div>  
+            {% endif %}
+            <div class="cart_box">
+            {% load static %}<a href = "/shoppingcart/"> <img src="{% static "images/shopping_cart.png" %}" 
+            alt="Shopping Cart" height = 40px width = 40px /></a>
+                <div><a href = "/logout/">Logout</a></div>
+                
+            </div>
+        
+        
+    </div>
+    <br>{{item_added_message}}<br>
+    <h2><a href="/products/">Back to Catalog</a></h2><br>
+    <div class="product_image" >
+        <img src="{{ STATIC_URL }}images/{{p.image}}" alt={{p.name}}/><br>
+    </div>
+    <h1><span property="v:name">{{ p.name }}</span></h1>
+    <br>
+    Price: {{ p.price|currency }} <br>
+    {% if p.old_price %} Was: <del>{{ p.old_price|currency }}</del><br>
+    {% endif %}
+    <form method="post" action="." class="cart">{% csrf_token %}
+        <br>
+        Qty <input type="number" name="{{p.id}}" value = "0" min = "0"> <br>
+        <button type="submit" name= "Submit" value = "Sub Val" />Add to Cart</button> <br> <br>
+        <h2>Product Description</h2>
+        <span property="v:description">{{ p.description }}</span>
+    </form>
+
+
+<div class="cb"><br><br></div>
+    <hr>
+    <br><br><br>
+</div>
+<br><br>
+{% endblock %}

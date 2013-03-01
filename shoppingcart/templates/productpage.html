@@ -1,0 +1,23 @@
+{% load catalog_filters %}
+ 
+{% load staticfiles %} 
+
+{% block content %}
+	<div class="product_image" >
+		<a href="/productdetail/{{p.internal_id}}"><img src="{{ STATIC_URL }}images/{{p.image}}" alt={{p.name}}/></a><br>
+	</div>
+	<h1><span property="v:name"><a href="/productdetail/{{p.internal_id}}">{{ p.name }}</a></span></h1>
+	<br>
+	Price: {{ p.price|currency }} <br>
+	{% if p.old_price %} Was: <del>{{ p.old_price|currency }}</del><br>
+	{% endif %}
+
+		<br>
+		Qty <input type="number" name="{{p.id}}" value = "0" min = "0"> <br>
+		
+
+	<div class="cb"></div>
+	
+	<hr>
+	<br><br><br>
+	{% endblock %}

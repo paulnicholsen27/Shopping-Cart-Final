@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load catalog_filters %}
+{% block site_wrapper %}
+
+<div class="orderhistorywrapper">
+<h1>{{ store_name }}</h1>    
+    {% for order in order_history_list %}
+        <h2>{{order}}</h2>
+        <table class="orderhistory">
+            <thead>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </thead>
+        {% for item in items_by_order|lookup:order %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.product.price|currency }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{item.total_price|currency}}</td>
+            </tr>
+        {% endfor %}
+        </table><br>
+        <div id="ordertotal">
+        Order Total: 
+        {{items_by_order|lookup:order|order_total|currency}}
+        </div>
+        <br>
+    {% empty %}
+    <h2> You have no order history to show.</h2>
+    {% endfor %}
+</div>
+    <br> <br> <br>
+{% endblock %}

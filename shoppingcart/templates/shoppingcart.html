@@ -1,0 +1,46 @@
+{% extends "catalog.html" %}
+
+{% load catalog_filters %}
+ 
+{% load staticfiles %} 
+
+{% block site_wrapper %}
+
+<h1>{{ store_name }}</h1>
+<br>
+
+<h2>You have {{number_of_items}} 
+    {%if number_of_items != 1 %} items {% else %} item {% endif %} 
+    in your cart </h2>
+<br>
+
+<table border="1">
+    <thead>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Total</th>
+    </thead>
+<form method="post" action="." class="change_quantity">{% csrf_token %}
+{% for key, value in cart.items %}
+    <tr>
+        <td><span property="v:name">{{ key.name }}</span></td>
+        <td>{{ key.price|currency }}</td>
+        <td> <input type = "number" name= {{key.id}} value = {{ value }} min = "0"> <br></td>
+        <td>{{ key.price|item_total:value|currency }}</td>
+    </tr>
+    {% endfor %}
+    <tfoot>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>Total:</td>
+            <td> {{cart.items|total_cost|currency }}</td>
+        </tr>
+    </tfoot>
+</table>
+<input type="submit" name="change" value = "Change quantity or remove item">
+<input type="submit" name="checkout" value = "Checkout">
+</form></div><br>
+
+{% endblock %}

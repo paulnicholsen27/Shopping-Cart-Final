@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+
+{% block site_wrapper %}
+<div id="main">
+	<div id="banner">
+			{{store_name}}
+			{% if user.is_authenticated %}
+			<div id='welcome'>
+				Welcome {{ user.first_name }}!
+			
+				<div>
+					<a href="/changeuser/">Not {{user.first_name}}? Click here</a>
+				</div>
+			</div>	
+			{% endif %}
+			<div class="cart_box">
+			{% load static %}<a href = "/shoppingcart/"> <img src="{% static "images/shopping_cart.png" %}" 
+			alt="Shopping Cart" height = 40px width = 40px /></a>
+				<div><a href = "/logout/">Logout</a></div>
+				
+			</div>
+		
+		
+	</div>
+	<br><br>
+	<h4>{{item_added_message}}</h4>
+	<hr>
+		<form method="post" action="." class="cart">{% csrf_token %}
+			{% for p in store_products %}
+				<p>{% include 'productpage.html' %}</p>
+			{% endfor %}
+			<button type="submit" name= "Submit" value = "Sub Val" />Add to Cart</button> 
+		</form>
+	<br><br>
+</div>
+<br><br>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load catalog_filters %}
+{% load easy_maps_tags %}
+
+{% block site_wrapper %}
+<div id="map_container"> <h1> {{store_name}}<h1>
+<div id="map">{% easy_map address 400 400 15%}</div>
+<h2>{{ address }}</h2>
+</div>
+{% endblock %}
